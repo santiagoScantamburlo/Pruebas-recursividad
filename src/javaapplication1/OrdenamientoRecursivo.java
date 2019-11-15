@@ -12,7 +12,7 @@ import java.util.Scanner;
  *
  * @author Cefai
  */
-public class ordenamientoRecursivo {
+public class OrdenamientoRecursivo {
 
     public static void main(String[] args) {
         Scanner pufu = new Scanner(System.in);

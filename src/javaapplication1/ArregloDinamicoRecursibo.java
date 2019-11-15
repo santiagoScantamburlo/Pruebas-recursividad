@@ -14,7 +14,7 @@ import java.util.Arrays;
  *
  * @author Cefai
  */
-public class arregloDinamicoRecursibo {
+public class ArregloDinamicoRecursibo {
 
     public static void main(String[] args) {
         Scanner pufu = new Scanner(System.in);

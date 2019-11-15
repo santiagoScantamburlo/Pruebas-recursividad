@@ -10,7 +10,7 @@ import java.util.Scanner;
  *
  * @author Cefai
  */
-public class cargaArregloRecursivo {
+public class CargaArregloRecursivo {
     public static void main(String[] args) {
         Scanner pufu = new Scanner(System.in);
         int[] arreglo;

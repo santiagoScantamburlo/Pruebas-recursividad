@@ -11,7 +11,7 @@ import java.util.Scanner;
  *
  * @author Cefai
  */
-public class arregloDinamico {
+public class ArregloDinamico {
 
     public static void main(String[] args) {
         Scanner pufu = new Scanner(System.in);

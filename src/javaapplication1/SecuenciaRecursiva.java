@@ -19,7 +19,7 @@ la secuencia  2 5 3 6 12 3 0 en los siguientes incisos:
 a) Calcular cuántos enteros múltiplos de 4 hay en la secuencia.
 b) Determinar el máximo entero perteneciente a la secuencia.
  */
-public class Ej5 {
+public class SecuenciaRecursiva {
 
     public static void main(String[] args) {
         Scanner pufu = new Scanner(System.in);
