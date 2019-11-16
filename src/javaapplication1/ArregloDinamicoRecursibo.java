@@ -31,19 +31,19 @@ public class ArregloDinamicoRecursibo {
         System.out.println(Arrays.toString(a));
     }
 
-    public static void agregarCeldas(int[] arreglo, int[] a, int longitud) {
+    public static void agregarCeldas(int[] arreglo, int[] arregloNuevo, int longitud) {
         Scanner pufu = new Scanner(System.in);
         int num;
         if (longitud == 0) {
-            a[longitud] = arreglo[longitud];
+            arregloNuevo[longitud] = arreglo[longitud];
         } else {
-            agregarCeldas(arreglo, a, longitud - 1);
+            agregarCeldas(arreglo, arregloNuevo, longitud - 1);
             if (arreglo.length <= longitud) {
                 System.out.println("Ingrese un numero");
                 num = pufu.nextInt();
-                a[longitud] = num;
+                arregloNuevo[longitud] = num;
             } else {
-                a[longitud] = arreglo[longitud];
+                arregloNuevo[longitud] = arreglo[longitud];
             }
         }
     }
