@@ -11,7 +11,7 @@ import java.util.Scanner;
  *
  * @author Santi
  */
-public class inmobiliaria {
+public class TestInmobiliariaII {
 
     public static void main(String[] args) {
         Scanner pufu = new Scanner(System.in);
