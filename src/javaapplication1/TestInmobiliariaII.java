@@ -72,6 +72,7 @@ public class TestInmobiliariaII {
         }
     }
 
+    //Este modulo se encarga de cargar las primeras 10 posiciones del arreglo
     public static void predefinirArreglo(Propiedad[] arreglo) {
         arreglo[0] = new Propiedad(00000, 'c', "San Martin", 3, 'v', 200, true, 150000);
         arreglo[1] = new Propiedad(11111, 'd', "Libertad", 4, 'a', 80, false, 16000);
@@ -85,6 +86,7 @@ public class TestInmobiliariaII {
         arreglo[9] = new Propiedad(99999, 'c', "San Martin", 1, 't', 12, false, 1350);
     }
 
+    //Muestra todas las opciones disponibles para realizar
     public static void menu() {
         System.out.println("Ingrese la opcion a realizar");
         System.out.println("--------------------------------------------------------------------------------------------------------");
@@ -101,6 +103,7 @@ public class TestInmobiliariaII {
         System.out.println("--------------------------------------------------------------------------------------------------------");
     }
 
+    //Solicita la cantidad de propiedades que quiere ingresar el usuario
     public static int sumarCeldas() {
         Scanner pufu = new Scanner(System.in);
         int celdas;
@@ -109,6 +112,7 @@ public class TestInmobiliariaII {
         return celdas;
     }
 
+    //De forma recursiva copia las referencias del arreglo original en el nuevo y cuando estan todas copiadas solicita la carga de datos
     public static void agregarCeldas(Propiedad[] arreglo, Propiedad[] nuevoArreglo, int longitud) {
         Propiedad p;
         if (longitud == 0) {
@@ -116,8 +120,8 @@ public class TestInmobiliariaII {
         } else {
             agregarCeldas(arreglo, nuevoArreglo, longitud - 1);
             if (arreglo.length <= longitud) {
-                p = cargarDatos(longitud, nuevoArreglo);
-                nuevoArreglo[longitud] = p;
+                p = cargarDatos(longitud, nuevoArreglo); //Llama al modulo que se encarga de cargar los datos
+                nuevoArreglo[longitud] = p; //Retorna la propiedad y se la asigna a la ultima posicion del arreglo
             } else {
                 nuevoArreglo[longitud] = arreglo[longitud];
             }
@@ -175,6 +179,7 @@ public class TestInmobiliariaII {
         return codigo;
     }
 
+    //De forma recursiva recorre el arreglo comparando los codigos y verifica que no se repitan, haciendo uso del metodo equals
     public static boolean verificarCodigo(Propiedad[] nuevoArreglo, int codigo, int longitud) {
         boolean retorno = true;
         Propiedad p = new Propiedad(codigo);
@@ -407,6 +412,7 @@ public class TestInmobiliariaII {
         }
     }
 
+    //Este modulo recibe el arreglo de propiedades y muestra un menu con los metodos de ordenamiento disponibles
     public static void ordenarXPrecio(Propiedad[] arreglo) {
         Scanner pufu = new Scanner(System.in);
         int opcion;
@@ -450,7 +456,7 @@ public class TestInmobiliariaII {
     }
 
     public static void seleccion(Propiedad[] a) {
-        int i, j, min = 0;
+        int i, j, min;
         Propiedad p;
 
         for (i = 0; i < a.length - 1; i++) {
@@ -467,7 +473,7 @@ public class TestInmobiliariaII {
         }
 
     }
-
+    
     public static void insercion(Propiedad[] a) {
         int j;
         Propiedad p;
@@ -483,6 +489,7 @@ public class TestInmobiliariaII {
         }
     }
 
+    //Solicito que se ingrese la cantidad de ambientes buscado y llamo al metodo recursivo
     public static void contarPropiedades(Propiedad[] arreglo) {
         Scanner pufu = new Scanner(System.in);
         int cantPropiedades, cantAmbientes;
@@ -494,6 +501,7 @@ public class TestInmobiliariaII {
         System.out.println("Hay " + cantPropiedades + " con " + cantAmbientes + " ambientes");
     }
 
+    //Recorro el arreglo recursivamente y aumento en 1 el retorno cada vez que la cantidad de ambientes es igual a la ingresada
     public static int contar(Propiedad[] arreglo, int n, int buscado) {
         int retorno = 0;
 
@@ -511,24 +519,27 @@ public class TestInmobiliariaII {
         return retorno;
     }
 
+    //En este modulo se realiza la busqueda de una propiedad con un precio ingresado
     public static void buscarCasa(Propiedad[] arreglo, boolean ordenado) {
         Scanner pufu = new Scanner(System.in);
         int precioBuscado, pos;
-        if (ordenado) {
+        if (ordenado) { //Verifico que el arreglo haya sido ordenado previamente, y a continuar realizo la busqueda
             System.out.println("Ingrese el precio de la casa que busca");
             precioBuscado = pufu.nextInt();
             pos = busquedaBinaria(arreglo, precioBuscado);
 
-            if (pos == -1) {
+            if (pos == -1) {//Verifico que la posicion sea diferente a -1 para imprimir la propiedad con el precio ingresado
                 System.out.println("El precio ingresado no pertenece a ninguna propiedad");
             } else {
                 System.out.println(arreglo[pos].toString());
             }
-        } else {
+        } else { //Si no esta ordenado imprime el cartel y vuelve al menu de opciones
             System.out.println("El arreglo no esta ordenado");
+            System.out.println("");
         }
     }
 
+    //Realizo la busqueda binaria una vez se verifica que esta ordenado y se solicita el precio
     public static int busquedaBinaria(Propiedad[] arreglo, int precioBuscado) {
         int inicio, fin, pos, medio;
 
@@ -550,6 +561,7 @@ public class TestInmobiliariaII {
         return pos;
     }
 
+    //Utilizo el método de ordenamiento Merge Sort
     public static void mergeSort(Propiedad[] a) {
         int mitad;
         Propiedad[] izq;
@@ -565,6 +577,8 @@ public class TestInmobiliariaII {
         }
     }
 
+    /*Divido el arreglo en 2 "sub arreglos", que a su vez se vuelven a dividir
+    hasta que sean de un solo elemento para comparar y acomodar segun corresponda*/
     public static Propiedad[] copiar(Propiedad[] a, int inicio, int fin) {
         Propiedad[] retorno;
         retorno = new Propiedad[fin - inicio];
@@ -576,6 +590,7 @@ public class TestInmobiliariaII {
         return retorno;
     }
 
+    //Combino las mitades en orden creciente
     public static void combinarArreglo(Propiedad[] a, Propiedad[] izq, Propiedad[] der) {
         int i = 0;
         int j = 0;
