@@ -52,6 +52,17 @@ public class TestInmobiliariaII {
                     break;
                 case 6:
                     contarPropiedades(arreglo);
+                    break;
+                case 7:
+                    break;
+                case 8:
+                    buscarCasa(arreglo, ordenado);
+                    break;
+                case 9:
+                    mergeSort(arreglo);
+                    listarDatos(arreglo);
+                    ordenado = true;
+                    break;
                 case 0:
                     continuar = false;
                     break;
@@ -450,10 +461,11 @@ public class TestInmobiliariaII {
                     min = j;
                 }
             }
+            p = a[i];
+            a[i] = a[min];
+            a[min] = p;
         }
-        p = a[i];
-        a[i] = a[min];
-        a[min] = p;
+
     }
 
     public static void insercion(Propiedad[] a) {
@@ -463,34 +475,34 @@ public class TestInmobiliariaII {
         for (int i = 1; i < a.length; i++) {
             p = a[i];
             j = i;
-            while (j > 0 && p.getCodigo() < a[j - 1].getCodigo()) {
+            while (j > 0 && p.getPrecio() < a[j - 1].getPrecio()) {
                 a[j] = a[j - 1];
                 j--;
             }
             a[j] = p;
         }
     }
-    
+
     public static void contarPropiedades(Propiedad[] arreglo) {
         Scanner pufu = new Scanner(System.in);
         int cantPropiedades, cantAmbientes;
-        
+
         System.out.println("Ingrese la cantidad de ambientes que desea buscar");
         cantAmbientes = pufu.nextInt();
-        
+
         cantPropiedades = contar(arreglo, arreglo.length, cantAmbientes);
         System.out.println("Hay " + cantPropiedades + " con " + cantAmbientes + " ambientes");
     }
-    
+
     public static int contar(Propiedad[] arreglo, int n, int buscado) {
         int retorno = 0;
-        
-        if(n == 0) {
-            if(arreglo[n].getCantAmbientes() == buscado) {
+
+        if (n == 0) {
+            if (arreglo[n].getCantAmbientes() == buscado) {
                 retorno = 1;
             }
         } else {
-            if(arreglo[n].getCantAmbientes() == buscado) {
+            if (arreglo[n].getCantAmbientes() == buscado) {
                 retorno = 1 + contar(arreglo, n - 1, buscado);
             } else {
                 retorno = contar(arreglo, n - 1, buscado);
@@ -498,6 +510,93 @@ public class TestInmobiliariaII {
         }
         return retorno;
     }
-    
-    
+
+    public static void buscarCasa(Propiedad[] arreglo, boolean ordenado) {
+        Scanner pufu = new Scanner(System.in);
+        int precioBuscado, pos;
+        if (ordenado) {
+            System.out.println("Ingrese el precio de la casa que busca");
+            precioBuscado = pufu.nextInt();
+            pos = busquedaBinaria(arreglo, precioBuscado);
+
+            if (pos == -1) {
+                System.out.println("El precio ingresado no pertenece a ninguna propiedad");
+            } else {
+                System.out.println(arreglo[pos].toString());
+            }
+        } else {
+            System.out.println("El arreglo no esta ordenado");
+        }
+    }
+
+    public static int busquedaBinaria(Propiedad[] arreglo, int precioBuscado) {
+        int inicio, fin, pos, medio;
+
+        inicio = 0;
+        fin = arreglo.length - 1;
+        pos = -1;
+
+        while (inicio <= fin) {
+            medio = (inicio + fin) / 2;
+            if (precioBuscado == arreglo[medio].getPrecio()) {
+                pos = medio;
+                inicio = fin + 1;
+            } else if (precioBuscado < arreglo[medio].getPrecio()) {
+                fin = medio - 1;
+            } else {
+                inicio = medio + 1;
+            }
+        }
+        return pos;
+    }
+
+    public static void mergeSort(Propiedad[] a) {
+        int mitad;
+        Propiedad[] izq;
+        Propiedad[] der;
+        if (a.length <= 1) {
+        } else {
+            mitad = a.length / 2;
+            izq = copiar(a, 0, mitad);
+            der = copiar(a, mitad, a.length);
+            mergeSort(izq);
+            mergeSort(der);
+            combinarArreglo(a, izq, der);
+        }
+    }
+
+    public static Propiedad[] copiar(Propiedad[] a, int inicio, int fin) {
+        Propiedad[] retorno;
+        retorno = new Propiedad[fin - inicio];
+
+        for (int i = 0; i < retorno.length; i++) {
+            retorno[i] = a[inicio];
+            inicio++;
+        }
+        return retorno;
+    }
+
+    public static void combinarArreglo(Propiedad[] a, Propiedad[] izq, Propiedad[] der) {
+        int i = 0;
+        int j = 0;
+        for (int k = 0; k < a.length; k++) {
+            if (i >= izq.length) {
+                a[k] = der[j];
+                j++;
+                continue;
+            }
+            if (j >= der.length) {
+                a[k] = izq[i];
+                i++;
+                continue;
+            }
+            if (izq[i].getSuperficie() < der[j].getSuperficie()) {
+                a[k] = izq[i];
+                i++;
+            } else {
+                a[k] = der[j];
+                j++;
+            }
+        }
+    }
 }
