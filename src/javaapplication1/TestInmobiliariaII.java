@@ -54,6 +54,7 @@ public class TestInmobiliariaII {
                     contarPropiedades(arreglo);
                     break;
                 case 7:
+                    buscarMayor(arreglo, indice);
                     break;
                 case 8:
                     buscarCasa(arreglo, ordenado);
@@ -74,12 +75,12 @@ public class TestInmobiliariaII {
 
     //Este modulo se encarga de cargar las primeras 10 posiciones del arreglo
     public static void predefinirArreglo(Propiedad[] arreglo) {
-        arreglo[0] = new Propiedad(00000, 'c', "San Martin", 3, 'v', 200, true, 150000);
-        arreglo[1] = new Propiedad(11111, 'd', "Libertad", 4, 'a', 80, false, 16000);
+        arreglo[0] = new Propiedad(00000, 'c', "San Martin", 3, 'a', 200, true, 150000);
+        arreglo[1] = new Propiedad(11111, 'd', "Libertad", 4, 'v', 80, false, 16000);
         arreglo[2] = new Propiedad(22222, 'x', "Santa Fe", 2, 't', 74, true, 1300);
         arreglo[3] = new Propiedad(33333, 'x', "Avenida Olascoaga", 5, 'a', 96, true, 19500);
         arreglo[4] = new Propiedad(44444, 'd', "Santa Rosa", 7, 'v', 156, true, 1250000);
-        arreglo[5] = new Propiedad(55555, 'c', "Tierra del Fuego", 5, 'a', 79, false, 32000);
+        arreglo[5] = new Propiedad(55555, 'c', "Tierra del Fuego", 5, 'a', 79, true, 32000);
         arreglo[6] = new Propiedad(66666, 'x', "Saturnino Torres", 6, 'a', 103, false, 25320);
         arreglo[7] = new Propiedad(77777, 'x', "Bahia Blanca", 4, 't', 125, true, 1250);
         arreglo[8] = new Propiedad(88888, 'd', "Elordi", 3, 'v', 86, true, 57890);
@@ -473,7 +474,7 @@ public class TestInmobiliariaII {
         }
 
     }
-    
+
     public static void insercion(Propiedad[] a) {
         int j;
         Propiedad p;
@@ -517,6 +518,45 @@ public class TestInmobiliariaII {
             }
         }
         return retorno;
+    }
+
+    public static void buscarMayor(Propiedad[] arreglo, int indice) {
+        int pos;
+        
+        pos = posicionMayor(arreglo, indice - 1);
+        
+        if(pos != -1) {
+            System.out.println(arreglo[pos].toString());
+        } else {
+            System.out.println("No existe una propiedad de esas caracteristicas");
+        }
+    }
+
+    /*
+    * busamos la propiedad en alquiler con mas superficie de un tipo
+     */
+    public static int posicionMayor(Propiedad[] arreglo, int indice) {
+        int pos = -1;
+
+        if (indice == 0) {
+            if (arreglo[indice].getDisponibilidad() && arreglo[indice].getTipo() == 'c' && arreglo[indice].getOperacion() == 'a') {
+                pos = indice;
+            }
+        } else {
+            pos = posicionMayor(arreglo, indice - 1);
+            if (pos == -1) {
+                if (arreglo[indice].getDisponibilidad() && arreglo[indice].getTipo() == 'c' && arreglo[indice].getOperacion() == 'a') {
+                    pos = indice;
+                }
+            } else {
+                if (arreglo[indice].getDisponibilidad() && arreglo[indice].getTipo() == 'c' && arreglo[indice].getOperacion() == 'a') {
+                    if (arreglo[pos].getSuperficie() < arreglo[indice].getSuperficie()) {
+                        pos = indice;
+                    }
+                }
+            }
+        }
+        return pos;
     }
 
     //En este modulo se realiza la busqueda de una propiedad con un precio ingresado
@@ -613,52 +653,5 @@ public class TestInmobiliariaII {
                 j++;
             }
         }
-    }
-    
-    
-    /*
-    * busamos la propiedad de alquiles con mas superficie de un tipo
-    */
-    
-        public static int pocionMayor(Propiedad[] arreglo, int longitud, char tipo){
-        int retorno;
-        //caso base
-        if(longitud == 0){
-            //en caso de ser del tipo indicado
-            if(arreglo[longitud].getTipo() == tipo){
-                retorno = 0;
-            }else{
-                retorno = -1;
-            }
-        }else{
-            //paso recursivo
-            int anterior = pocionMayor(arreglo, longitud-1, tipo);
-            if(anterior == -1){
-                //en caso de que el anterior no sea de ese tipo
-                if(arreglo[longitud].getTipo() == tipo){
-                    //en caso de que el actual sea de ese tipo se retorna
-                    retorno = longitud;
-                }else{
-                    //en caso contrario se retorna el anterior
-                    retorno = anterior;
-                }
-            }else{
-                //en caso de que alterior sea de ese tipo
-                if(arreglo[longitud].getTipo() == tipo){
-                    //se evalua si al actual es de ese tipo
-                    if(arreglo[anterior].getSuperficie() >= arreglo[longitud].getSuperficie()){
-                        //se comparan superficies y se retorna la posicion de la mayor superficie
-                        retorno = anterior;
-                    }else{
-                        retorno = longitud;
-                    }
-                }else{
-                    //en caso de que el actual no sea de ese tipo pero el anterior si se retorna el anterior
-                    retorno = anterior;
-                }
-            }
-        }
-        
-        return retorno;
     }
 }
