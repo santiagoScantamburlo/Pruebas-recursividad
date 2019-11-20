@@ -614,4 +614,51 @@ public class TestInmobiliariaII {
             }
         }
     }
+    
+    
+    /*
+    * busamos la propiedad de alquiles con mas superficie de un tipo
+    */
+    
+        public static int pocionMayor(Propiedad[] arreglo, int longitud, char tipo){
+        int retorno;
+        //caso base
+        if(longitud == 0){
+            //en caso de ser del tipo indicado
+            if(arreglo[longitud].getTipo() == tipo){
+                retorno = 0;
+            }else{
+                retorno = -1;
+            }
+        }else{
+            //paso recursivo
+            int anterior = pocionMayor(arreglo, longitud-1, tipo);
+            if(anterior == -1){
+                //en caso de que el anterior no sea de ese tipo
+                if(arreglo[longitud].getTipo() == tipo){
+                    //en caso de que el actual sea de ese tipo se retorna
+                    retorno = longitud;
+                }else{
+                    //en caso contrario se retorna el anterior
+                    retorno = anterior;
+                }
+            }else{
+                //en caso de que alterior sea de ese tipo
+                if(arreglo[longitud].getTipo() == tipo){
+                    //se evalua si al actual es de ese tipo
+                    if(arreglo[anterior].getSuperficie() >= arreglo[longitud].getSuperficie()){
+                        //se comparan superficies y se retorna la posicion de la mayor superficie
+                        retorno = anterior;
+                    }else{
+                        retorno = longitud;
+                    }
+                }else{
+                    //en caso de que el actual no sea de ese tipo pero el anterior si se retorna el anterior
+                    retorno = anterior;
+                }
+            }
+        }
+        
+        return retorno;
+    }
 }
