@@ -60,9 +60,8 @@ public class TestInmobiliariaII {
                     buscarCasa(arreglo, ordenado);
                     break;
                 case 9:
-                    mergeSort(arreglo);
+                    heapSort(arreglo);
                     listarDatos(arreglo);
-                    ordenado = true;
                     break;
                 case 0:
                     continuar = false;
@@ -522,10 +521,10 @@ public class TestInmobiliariaII {
 
     public static void buscarMayor(Propiedad[] arreglo, int indice) {
         int pos;
-        
+
         pos = posicionMayor(arreglo, indice - 1);
-        
-        if(pos != -1) {
+
+        if (pos != -1) {
             System.out.println(arreglo[pos].toString());
         } else {
             System.out.println("No existe una propiedad de esas caracteristicas");
@@ -540,7 +539,7 @@ public class TestInmobiliariaII {
         char tipo, operacion;
         boolean disponibilidad;
         int superficie;
-        
+
         tipo = arreglo[indice].getTipo();
         operacion = arreglo[indice].getOperacion();
         disponibilidad = arreglo[indice].getDisponibilidad();
@@ -609,57 +608,42 @@ public class TestInmobiliariaII {
         return pos;
     }
 
-    //Utilizo el método de ordenamiento Merge Sort
-    public static void mergeSort(Propiedad[] a) {
-        int mitad;
-        Propiedad[] izq;
-        Propiedad[] der;
-        if (a.length <= 1) {
+    public static void heapSort(Propiedad[] a) {
+        int n = a.length;
+        Propiedad temp;
+        for (int i = n / 2; i >= 0; i--) {
+            hacerMonticulo(a, i, n - 1);
+        }
+        for (int i = n - 1; i >= 0; i--) {
+            temp = a[0];
+            a[0] = a[i];
+            a[i] = temp;
+            hacerMonticulo(a, 0, i - 1);
+        }
+    }
+
+    public static void hacerMonticulo(Propiedad[] a, int i, int fin) {
+        int izq = 2 * i + 1;
+        int der = izq + 1;
+        int may;
+        if (izq > fin) {
+            return;
+        }
+        if (der > fin) {
+            may = izq;
         } else {
-            mitad = a.length / 2;
-            izq = copiar(a, 0, mitad);
-            der = copiar(a, mitad, a.length);
-            mergeSort(izq);
-            mergeSort(der);
-            combinarArreglo(a, izq, der);
-        }
-    }
-
-    /*Divido el arreglo en 2 "sub arreglos", que a su vez se vuelven a dividir
-    hasta que sean de un solo elemento para comparar y acomodar segun corresponda*/
-    public static Propiedad[] copiar(Propiedad[] a, int inicio, int fin) {
-        Propiedad[] retorno;
-        retorno = new Propiedad[fin - inicio];
-
-        for (int i = 0; i < retorno.length; i++) {
-            retorno[i] = a[inicio];
-            inicio++;
-        }
-        return retorno;
-    }
-
-    //Combino las mitades en orden creciente
-    public static void combinarArreglo(Propiedad[] a, Propiedad[] izq, Propiedad[] der) {
-        int i = 0;
-        int j = 0;
-        for (int k = 0; k < a.length; k++) {
-            if (i >= izq.length) {
-                a[k] = der[j];
-                j++;
-                continue;
-            }
-            if (j >= der.length) {
-                a[k] = izq[i];
-                i++;
-                continue;
-            }
-            if (izq[i].getSuperficie() < der[j].getSuperficie()) {
-                a[k] = izq[i];
-                i++;
+            if(a[izq].getSuperficie() > a[der].getSuperficie()) {
+                may = izq;
             } else {
-                a[k] = der[j];
-                j++;
+                
             }
+            may = der;
+        }
+        if (a[i].getSuperficie() < a[may].getSuperficie()) {
+            Propiedad tmp = a[i];
+            a[i] = a[may];
+            a[may] = tmp;
+            hacerMonticulo(a, may, fin);
         }
     }
 }
