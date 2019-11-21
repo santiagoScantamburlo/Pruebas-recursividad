@@ -537,20 +537,28 @@ public class TestInmobiliariaII {
      */
     public static int posicionMayor(Propiedad[] arreglo, int indice) {
         int pos = -1;
+        char tipo, operacion;
+        boolean disponibilidad;
+        int superficie;
+        
+        tipo = arreglo[indice].getTipo();
+        operacion = arreglo[indice].getOperacion();
+        disponibilidad = arreglo[indice].getDisponibilidad();
+        superficie = arreglo[indice].getSuperficie();
 
         if (indice == 0) {
-            if (arreglo[indice].getDisponibilidad() && arreglo[indice].getTipo() == 'c' && arreglo[indice].getOperacion() == 'a') {
+            if (disponibilidad && tipo == 'c' && operacion == 'a') {
                 pos = indice;
             }
         } else {
             pos = posicionMayor(arreglo, indice - 1);
             if (pos == -1) {
-                if (arreglo[indice].getDisponibilidad() && arreglo[indice].getTipo() == 'c' && arreglo[indice].getOperacion() == 'a') {
+                if (disponibilidad && tipo == 'c' && operacion == 'a') {
                     pos = indice;
                 }
             } else {
-                if (arreglo[indice].getDisponibilidad() && arreglo[indice].getTipo() == 'c' && arreglo[indice].getOperacion() == 'a') {
-                    if (arreglo[pos].getSuperficie() < arreglo[indice].getSuperficie()) {
+                if (disponibilidad && tipo == 'c' && operacion == 'a') {
+                    if (arreglo[pos].getSuperficie() < superficie) {
                         pos = indice;
                     }
                 }
