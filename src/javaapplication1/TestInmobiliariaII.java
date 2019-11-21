@@ -498,7 +498,7 @@ public class TestInmobiliariaII {
         cantAmbientes = pufu.nextInt();
 
         cantPropiedades = contar(arreglo, arreglo.length, cantAmbientes);
-        System.out.println("Hay " + cantPropiedades + " con " + cantAmbientes + " ambientes");
+        System.out.println("Hay " + cantPropiedades + " propiedades con " + cantAmbientes + " ambiente/s");
     }
 
     //Recorro el arreglo recursivamente y aumento en 1 el retorno cada vez que la cantidad de ambientes es igual a la ingresada
@@ -531,9 +531,8 @@ public class TestInmobiliariaII {
         }
     }
 
-    /*
-    * busamos la propiedad en alquiler con mas superficie de un tipo
-     */
+    
+    //Buscamos la casa disponible en alquiler con mas superficie
     public static int posicionMayor(Propiedad[] arreglo, int indice) {
         int pos = -1;
         char tipo, operacion;
@@ -545,18 +544,18 @@ public class TestInmobiliariaII {
         disponibilidad = arreglo[indice].getDisponibilidad();
         superficie = arreglo[indice].getSuperficie();
 
-        if (indice == 0) {
-            if (disponibilidad && tipo == 'c' && operacion == 'a') {
+        if (indice == 0) { //Caso base cuando la posicion sea cero
+            if (disponibilidad && tipo == 'c' && operacion == 'a') { //Verifica qie sea una casa disponible en alquiler y retorna la posicion actual. De no serlo retorna -1
                 pos = indice;
             }
         } else {
-            pos = posicionMayor(arreglo, indice - 1);
-            if (pos == -1) {
-                if (disponibilidad && tipo == 'c' && operacion == 'a') {
+            pos = posicionMayor(arreglo, indice - 1); //Hace el paso recursivo hasta llegar a la primer posicion y empieza a verificar
+            if (pos == -1) { //Verifica que el retorno sea una casa disponible en alquiler
+                if (disponibilidad && tipo == 'c' && operacion == 'a') { //De no serlo verifica que la propiedad de la posicion actual lo sea
                     pos = indice;
                 }
             } else {
-                if (disponibilidad && tipo == 'c' && operacion == 'a') {
+                if (disponibilidad && tipo == 'c' && operacion == 'a') { //Si la propiedad en la posicion retornada es valida, verifica que la de la posicion actual tambien lo sea
                     if (arreglo[pos].getSuperficie() < superficie) {
                         pos = indice;
                     }
@@ -632,12 +631,11 @@ public class TestInmobiliariaII {
         if (der > fin) {
             may = izq;
         } else {
-            if(a[izq].getSuperficie() > a[der].getSuperficie()) {
+            if (a[izq].getSuperficie() > a[der].getSuperficie()) {
                 may = izq;
             } else {
-                
+                may = der;
             }
-            may = der;
         }
         if (a[i].getSuperficie() < a[may].getSuperficie()) {
             Propiedad tmp = a[i];
