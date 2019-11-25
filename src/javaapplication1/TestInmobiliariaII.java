@@ -82,7 +82,7 @@ public class TestInmobiliariaII {
         arreglo[5] = new Propiedad(55555, 'c', "Tierra del Fuego", 5, 'a', 79, true, 32000);
         arreglo[6] = new Propiedad(66666, 'x', "Saturnino Torres", 6, 'a', 103, false, 25320);
         arreglo[7] = new Propiedad(77777, 'x', "Bahia Blanca", 4, 't', 125, true, 1250);
-        arreglo[8] = new Propiedad(88888, 'd', "Elordi", 3, 'v', 86, true, 57890);
+        arreglo[8] = new Propiedad(88888, 'd', "Elordi", 2, 'v', 86, true, 57890);
         arreglo[9] = new Propiedad(99999, 'c', "San Martin", 1, 't', 12, false, 1350);
     }
 
@@ -499,6 +499,8 @@ public class TestInmobiliariaII {
 
         cantPropiedades = contar(arreglo, arreglo.length, cantAmbientes);
         System.out.println("Hay " + cantPropiedades + " propiedades con " + cantAmbientes + " ambiente/s");
+        cantPropiedades = contar(arreglo, arreglo.length - 1, cantAmbientes);
+        System.out.println("Hay " + cantPropiedades + " con " + cantAmbientes + " ambientes");
     }
 
     //Recorro el arreglo recursivamente y aumento en 1 el retorno cada vez que la cantidad de ambientes es igual a la ingresada
@@ -506,11 +508,11 @@ public class TestInmobiliariaII {
         int retorno = 0;
 
         if (n == 0) {
-            if (arreglo[n].getCantAmbientes() == buscado) {
+            if (arreglo[n].getCantAmbientes() == buscado && arreglo[n].getDisponibilidad()) {
                 retorno = 1;
             }
         } else {
-            if (arreglo[n].getCantAmbientes() == buscado) {
+            if (arreglo[n].getCantAmbientes() == buscado && arreglo[n].getDisponibilidad()) {
                 retorno = 1 + contar(arreglo, n - 1, buscado);
             } else {
                 retorno = contar(arreglo, n - 1, buscado);
