@@ -16,12 +16,11 @@ public class TestInmobiliariaII {
     public static void main(String[] args) {
         Scanner pufu = new Scanner(System.in);
         Propiedad[] arreglo, nuevoArreglo;
-        int indice, opcion, celdas;
+        int opcion, celdas;
         boolean continuar = true;
         boolean ordenado = false;
 
-        indice = 10;
-        arreglo = new Propiedad[indice];
+        arreglo = new Propiedad[10];
         predefinirArreglo(arreglo);
 
         while (continuar) {
@@ -30,10 +29,9 @@ public class TestInmobiliariaII {
             switch (opcion) {
                 case 1:
                     celdas = sumarCeldas();
-                    nuevoArreglo = new Propiedad[indice + celdas];
+                    nuevoArreglo = new Propiedad[arreglo.length + celdas];
                     agregarCeldas(arreglo, nuevoArreglo, nuevoArreglo.length - 1);
                     arreglo = nuevoArreglo;
-                    indice = nuevoArreglo.length;
                     ordenado = false;
                     break;
                 case 2:
@@ -54,7 +52,7 @@ public class TestInmobiliariaII {
                     contarPropiedades(arreglo);
                     break;
                 case 7:
-                    buscarMayor(arreglo, indice);
+                    buscarMayor(arreglo, arreglo.length);
                     break;
                 case 8:
                     buscarCasa(arreglo, ordenado);
@@ -130,7 +128,7 @@ public class TestInmobiliariaII {
 
     public static Propiedad cargarDatos(int longitud, Propiedad[] nuevoArreglo) {
         boolean esValido = false;
-        Propiedad p;
+        Propiedad p, aux;
         int codigo = 0, cantAmbientes, superficie, precio;
         String direccion;
         char tipo, operacion;
@@ -139,7 +137,8 @@ public class TestInmobiliariaII {
         //Repite hasta que el codigo ingresado sea valido
         while (!esValido) {
             codigo = cargarCodigo();
-            esValido = verificarCodigo(nuevoArreglo, codigo, longitud - 1);//Llama al modulo que verifica la validez del codigo
+            aux = new Propiedad (codigo);
+            esValido = verificarCodigo(nuevoArreglo, aux, longitud - 1);//Llama al modulo que verifica la validez del codigo
         }
         tipo = cargarTipo();
         direccion = cargarDireccion();
@@ -180,19 +179,18 @@ public class TestInmobiliariaII {
     }
 
     //De forma recursiva recorre el arreglo comparando los codigos y verifica que no se repitan, haciendo uso del metodo equals
-    public static boolean verificarCodigo(Propiedad[] nuevoArreglo, int codigo, int longitud) {
+    public static boolean verificarCodigo(Propiedad[] nuevoArreglo, Propiedad aux, int longitud) {
         boolean retorno = true;
-        Propiedad p = new Propiedad(codigo);
 
         if (longitud == 0) {
-            if (nuevoArreglo[longitud].equals(p)) {
+            if (nuevoArreglo[longitud].equals(aux)) {
                 retorno = false;
             }
         } else {
-            if (nuevoArreglo[longitud].equals(p)) {
+            if (nuevoArreglo[longitud].equals(aux)) {
                 retorno = false;
             } else {
-                retorno = true && verificarCodigo(nuevoArreglo, codigo, longitud - 1);
+                retorno = true && verificarCodigo(nuevoArreglo, aux, longitud - 1);
             }
         }
         return retorno;
